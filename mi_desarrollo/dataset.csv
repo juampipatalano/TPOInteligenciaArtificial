@@ -1,0 +1,108 @@
+texto,intencion
+dale para adelante,MOVER
+andá hacia adelante,MOVER
+avanzá un metro,MOVER
+caminá tres metros,MOVER
+movete un poquito,MOVER
+adelantate medio metro,MOVER
+seguí caminando,MOVER
+caminá hasta la puerta,MOVER
+retrocedé dos metros,MOVER
+volvé para atrás,MOVER
+id hacia adelante,MOVER
+desplazate un metro,MOVER
+acercate a mí,MOVER
+vení para acá,MOVER
+alejate un poco,MOVER
+avanza despacito,MOVER
+caminá lento,MOVER
+andá rápido para adelante,MOVER
+tirá para adelante un toque,MOVER
+marcha atrás,MOVER
+date media vuelta,GIRAR
+girá a la derecha,GIRAR
+doblá a la izquierda,GIRAR
+rotá 30 grados,GIRAR
+gira sobre tu eje,GIRAR
+dá una vuelta,GIRAR
+volteate,GIRAR
+girá 60 grados a la izquierda,GIRAR
+doblá a la derecha en la esquina,GIRAR
+rotá hacia la izquierda,GIRAR
+pegá la vuelta,GIRAR
+mirá para la derecha,GIRAR
+mirá hacia atrás,GIRAR
+un cuarto de vuelta a la derecha,GIRAR
+girate un poco,GIRAR
+cambiá de dirección,GIRAR
+frená ahí,DETENERSE
+pará,DETENERSE
+detenete,DETENERSE
+quedate quieto,DETENERSE
+stop,DETENERSE
+alto ahí,DETENERSE
+basta,DETENERSE
+no te muevas,DETENERSE
+frená ya mismo,DETENERSE
+parate ahí,DETENERSE
+dejá de caminar,DETENERSE
+no sigas,DETENERSE
+quieto ahí,DETENERSE
+detené todo,DETENERSE
+cortala,DETENERSE
+hacele hola a la clase,SALUDO
+saludá,SALUDO
+saludá al profesor,SALUDO
+decí hola,SALUDO
+hacé un saludo a todos,SALUDO
+dame la mano,SALUDO
+dale la mano al profe,SALUDO
+saludá con la mano,SALUDO
+dales la bienvenida,SALUDO
+despedite de la clase,SALUDO
+hacé chau con la mano,SALUDO
+saludalos,SALUDO
+cuánta carga te queda,CONSULTAR_ESTADO
+cómo está tu batería,CONSULTAR_ESTADO
+dame tu estado,CONSULTAR_ESTADO
+dónde estás,CONSULTAR_ESTADO
+cuál es tu posición,CONSULTAR_ESTADO
+reportá tu estado,CONSULTAR_ESTADO
+nivel de batería,CONSULTAR_ESTADO
+cómo andás de carga,CONSULTAR_ESTADO
+estás bien,CONSULTAR_ESTADO
+decime tu ubicación,CONSULTAR_ESTADO
+te queda batería,CONSULTAR_ESTADO
+mostrá la telemetría,CONSULTAR_ESTADO
+qué hora es,DESCONOCIDO
+contame un chiste,DESCONOCIDO
+cuál es tu nombre,DESCONOCIDO
+qué día es hoy,DESCONOCIDO
+te gusta el fútbol,DESCONOCIDO
+cantá una canción,DESCONOCIDO
+cuánto es dos más dos,DESCONOCIDO
+buenas cómo andás vos,DESCONOCIDO
+de dónde sos,DESCONOCIDO
+qué tal todo,DESCONOCIDO
+che robot,DESCONOCIDO
+bailá un tango,DESCONOCIDO
+hacé la tarea,DESCONOCIDO
+qué opinás de la IA,DESCONOCIDO
+abrí la ventana,DESCONOCIDO
+prendé la luz,DESCONOCIDO
+cómo te llamás vos,DESCONOCIDO
+quién te fabricó,DESCONOCIDO
+qué sabés hacer,DESCONOCIDO
+jaja,DESCONOCIDO
+corré hasta la pared,DESCONOCIDO
+salí corriendo,DESCONOCIDO
+saltá la valla,DESCONOCIDO
+pegá un salto,DESCONOCIDO
+tirate al piso,DESCONOCIDO
+golpeá la puerta,DESCONOCIDO
+rompé la silla,DESCONOCIDO
+empujá al compañero,DESCONOCIDO
+subite a la silla,DESCONOCIDO
+no saltes,DESCONOCIDO
+hacé silencio,DESCONOCIDO
+lo más fuerte que puedas,DESCONOCIDO
