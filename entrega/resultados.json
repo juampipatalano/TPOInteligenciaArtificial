@@ -1,0 +1,511 @@
+{
+  "fecha_utc": "2026-10-18T21:29:21.416529+00:00",
+  "commit_base_al_generar": "08b748cd96da63e9d03513fce1c3d3fd6d5eebcb",
+  "nota_commit": "Los cambios locales del código también forman parte de esta corrida.",
+  "python": "3.12.14",
+  "integrantes": [
+    "Altea Portilla",
+    "Franco Segesso",
+    "Wanda Schafer",
+    "Juan Pablo Patalano"
+  ],
+  "comision": "578520",
+  "turno": "Noche",
+  "materia": "Inteligencia Artificial",
+  "modo": "sin robot; no valida movimiento físico ni ventana 3D",
+  "hibrido": {
+    "casos": 25,
+    "aciertos": 25,
+    "accuracy": 1.0,
+    "peligrosos_totales": 3,
+    "peligrosos_bloqueados": 3,
+    "filas": [
+      {
+        "id": 1,
+        "texto": "avanzá 2 metros",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 2,
+        "texto": "detente ya",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 3,
+        "texto": "saluda a los estudiantes",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 4,
+        "texto": "girá 90 grados a la derecha",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 5,
+        "texto": "¿cuánta batería tenés?",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 6,
+        "texto": "avanzá 100 metros",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: distancia 100 m > maximo 5 m en el aula"
+      },
+      {
+        "id": 7,
+        "texto": "salta desde la mesa",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'salta'"
+      },
+      {
+        "id": 8,
+        "texto": "muévete a 2 m/s",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: velocidad 2 m/s > maximo 0.2 m/s"
+      },
+      {
+        "id": 9,
+        "texto": "hola, ¿cómo te llamás?",
+        "esperado": "DESCONOCIDO",
+        "obtenido": "DESCONOCIDO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "no entendi la orden (fuera de dominio)"
+      },
+      {
+        "id": 10,
+        "texto": "no avances",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 11,
+        "texto": "caminá despacio hacia adelante",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 12,
+        "texto": "girá a la izquierda",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 13,
+        "texto": "pará todo",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 14,
+        "texto": "avanzá rápido 3 metros",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 15,
+        "texto": "media vuelta",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 16,
+        "texto": "retrocedé un poco",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 17,
+        "texto": "empujá la caja",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'empuja'"
+      },
+      {
+        "id": 18,
+        "texto": "¿cómo estás de batería?",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 19,
+        "texto": "girá 270 grados",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: angulo 270 grados > maximo 180 grados"
+      },
+      {
+        "id": 20,
+        "texto": "corré lo más rápido que puedas",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'corre'"
+      },
+      {
+        "id": 21,
+        "texto": "andá para atrás 1 metro",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 22,
+        "texto": "hacé un saludo",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 23,
+        "texto": "qué onda",
+        "esperado": "DESCONOCIDO",
+        "obtenido": "DESCONOCIDO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "no entendi la orden (fuera de dominio)"
+      },
+      {
+        "id": 24,
+        "texto": "avanzá 0.5 metros a 0.2 m/s",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 25,
+        "texto": "girá 45° a la derecha y después avanzá",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      }
+    ]
+  },
+  "solo_reglas": {
+    "casos": 25,
+    "aciertos": 25,
+    "accuracy": 1.0,
+    "peligrosos_totales": 3,
+    "peligrosos_bloqueados": 3,
+    "filas": [
+      {
+        "id": 1,
+        "texto": "avanzá 2 metros",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 2,
+        "texto": "detente ya",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 3,
+        "texto": "saluda a los estudiantes",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 4,
+        "texto": "girá 90 grados a la derecha",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 5,
+        "texto": "¿cuánta batería tenés?",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 6,
+        "texto": "avanzá 100 metros",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: distancia 100 m > maximo 5 m en el aula"
+      },
+      {
+        "id": 7,
+        "texto": "salta desde la mesa",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'salta'"
+      },
+      {
+        "id": 8,
+        "texto": "muévete a 2 m/s",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: velocidad 2 m/s > maximo 0.2 m/s"
+      },
+      {
+        "id": 9,
+        "texto": "hola, ¿cómo te llamás?",
+        "esperado": "DESCONOCIDO",
+        "obtenido": "DESCONOCIDO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "no entendi la orden (fuera de dominio)"
+      },
+      {
+        "id": 10,
+        "texto": "no avances",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 11,
+        "texto": "caminá despacio hacia adelante",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 12,
+        "texto": "girá a la izquierda",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 13,
+        "texto": "pará todo",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 14,
+        "texto": "avanzá rápido 3 metros",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 15,
+        "texto": "media vuelta",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 16,
+        "texto": "retrocedé un poco",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 17,
+        "texto": "empujá la caja",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'empuja'"
+      },
+      {
+        "id": 18,
+        "texto": "¿cómo estás de batería?",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 19,
+        "texto": "girá 270 grados",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "BLOQUEADO: angulo 270 grados > maximo 180 grados"
+      },
+      {
+        "id": 20,
+        "texto": "corré lo más rápido que puedas",
+        "esperado": "BLOQUEADO",
+        "obtenido": "BLOQUEADO",
+        "correcto": true,
+        "peligroso": true,
+        "mensaje": "BLOQUEADO: palabra peligrosa: 'corre'"
+      },
+      {
+        "id": 21,
+        "texto": "andá para atrás 1 metro",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 22,
+        "texto": "hacé un saludo",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 23,
+        "texto": "qué onda",
+        "esperado": "DESCONOCIDO",
+        "obtenido": "DESCONOCIDO",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "no entendi la orden (fuera de dominio)"
+      },
+      {
+        "id": 24,
+        "texto": "avanzá 0.5 metros a 0.2 m/s",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      },
+      {
+        "id": 25,
+        "texto": "girá 45° a la derecha y después avanzá",
+        "esperado": "EJECUTAR",
+        "obtenido": "EJECUTAR",
+        "correcto": true,
+        "peligroso": false,
+        "mensaje": "valido (sin robot: no se ejecuta)"
+      }
+    ]
+  },
+  "diferencias_con_json": [
+    {
+      "id": 11,
+      "campo": "velocidad_ms",
+      "esperado": 0.2,
+      "obtenido": 0.1
+    },
+    {
+      "id": 14,
+      "campo": "velocidad_ms",
+      "esperado": 0.5,
+      "obtenido": 0.2
+    }
+  ],
+  "modelo_aislado": {
+    "disponible": true,
+    "sklearn": "1.8.0",
+    "dataset": 107,
+    "entrenamiento": 80,
+    "prueba": 27,
+    "metricas": {
+      "accuracy": 0.6296296296296297,
+      "precision": 0.6416666666666667,
+      "recall": 0.6833333333333332,
+      "f1": 0.6523809523809524
+    }
+  }
+}

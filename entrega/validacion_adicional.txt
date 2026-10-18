@@ -1,0 +1,21 @@
+Comisión 578520 - Noche - Inteligencia Artificial
+Integrantes: Altea Portilla, Franco Segesso, Wanda Schafer, Juan Pablo Patalano
+Ejecución: python -m unittest discover -s mi_desarrollo -p 'test_*.py' -v
+Entorno: Python 3.12.14. Sin simulador ni robot físico; RobotPrueba registra llamadas.
+
+test_bateria_baja_o_desconocida_bloquea_movimiento_pero_no_freno (test_agente.PruebasAgente.test_bateria_baja_o_desconocida_bloquea_movimiento_pero_no_freno) ... ok
+test_cantidades_negativas_conservadas_y_bloqueadas (test_agente.PruebasAgente.test_cantidades_negativas_conservadas_y_bloqueadas) ... ok
+test_casos_catedra_sin_modelo (test_agente.PruebasAgente.test_casos_catedra_sin_modelo) ... ok
+test_dos_metros_se_parten_sin_superar_cinco_segundos (test_agente.PruebasAgente.test_dos_metros_se_parten_sin_superar_cinco_segundos) ... ok
+test_peligro_desconocido_y_orden_compuesta_no_se_ejecutan (test_agente.PruebasAgente.test_peligro_desconocido_y_orden_compuesta_no_se_ejecutan) ... ok
+test_repeticion_vuelve_a_validar_bateria (test_agente.PruebasAgente.test_repeticion_vuelve_a_validar_bateria) ... ok
+test_velocidad_angular_se_valida_antes_de_ejecutar (test_agente.PruebasAgente.test_velocidad_angular_se_valida_antes_de_ejecutar) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.007s
+
+OK
+      [EJECUTOR] 1 m a 0.2 m/s = 5.00 s
+      [EJECUTOR]   tramo 1/1: avanzar(+0.20, 5.00)
+      [EJECUTOR] 45 grados = 0.7854 rad a la derecha, a 0.5 rad/s = 1.57 s
+      [EJECUTOR]   tramo 1/1: girar(-0.50, 1.57)

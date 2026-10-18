@@ -9,8 +9,9 @@
 #    2. Espera a que aparezca la ventana con el robot
 #    3. Recien ahi ejecuta este archivo
 #
-#  Nombre y apellido:  .....................................
-#  Comision:           .....................................
+#  Integrantes: Altea Portilla, Franco Segesso, Wanda Schafer,
+#               Juan Pablo Patalano
+#  Comision: 578520 - Turno Noche - Inteligencia Artificial
 #
 #  Que hace este agente, ademas de lo minimo:
 #    - Nivel 1: reglas con `re` (siempre activas, son el respaldo).
@@ -25,14 +26,19 @@
 
 import re
 import unicodedata
+from datetime import datetime, timezone
 
 from robot import Robot
 
 from ejecutor import Ejecutor
 from evaluar import evaluar
 
-# Pone tu nombre: aparece en el reporte que entregas.
-ALUMNO = "Apellido, Nombre"
+INTEGRANTES = ("Altea Portilla", "Franco Segesso", "Wanda Schafer",
+               "Juan Pablo Patalano")
+ALUMNO = "; ".join(INTEGRANTES)
+COMISION = "578520"
+TURNO = "Noche"
+MATERIA = "Inteligencia Artificial"
 
 
 # =====================================================================
@@ -190,7 +196,8 @@ _NUMEROS_ESCRITOS = {
     "cinco": 5, "seis": 6, "siete": 7, "ocho": 8, "nueve": 9, "diez": 10,
     "medio": 0.5, "media": 0.5, "cien": 100,
 }
-_NUM = r"(\d+(?:\.\d+)?|" + "|".join(sorted(_NUMEROS_ESCRITOS, key=len, reverse=True)) + r")"
+_NUM = (r"(?<![\w.])([+-]?\d+(?:\.\d+)?|"
+        + "|".join(sorted(_NUMEROS_ESCRITOS, key=len, reverse=True)) + r")")
 
 
 def _a_numero(palabra):
@@ -221,6 +228,12 @@ class ExtractorParametros:
         """
         t = normalizar(texto)
         p = {}
+
+        # Se separa antes de las velocidades lineales para conservar la unidad.
+        m = re.search(_NUM + r"\s*(?:rad/s|rads|radianes? por segundo)", t)
+        if m:
+            p["velocidad_giro"] = _a_numero(m.group(1))
+            t = t[:m.start()] + " " + t[m.end():]
 
         # --- velocidad: primero, y se borra, para que "2 m/s" no se lea
         #     despues como "2 m" de distancia.
@@ -369,6 +382,8 @@ class ValidadorSeguridad:
 
         # 3. Velocidad de giro.
         w = p.get("velocidad_giro")
+        if w is not None and w <= 0:
+            return False, f"velocidad de giro invalida ({w} rad/s)"
         if w is not None and abs(w) > self.perfil.velocidad_angular_max + 1e-9:
             return False, (f"velocidad de giro {w:g} rad/s > maximo "
                            f"{self.perfil.velocidad_angular_max:g} rad/s")
@@ -530,6 +545,7 @@ class AgenteRobot:
         return respuesta
 
     def _registrar(self, respuesta):
+        respuesta["timestamp_utc"] = datetime.now(timezone.utc).isoformat()
         self.historial.append(respuesta)
 
 
@@ -561,6 +577,8 @@ def main():
 
     try:
         agente = AgenteRobot(robot)
+        print(f"\n  {MATERIA} - Comision {COMISION} - Turno {TURNO}")
+        print(f"  Integrantes: {ALUMNO}")
         evaluar(agente)
 
         if robot is not None:

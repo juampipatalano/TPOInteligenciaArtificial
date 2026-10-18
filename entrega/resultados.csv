@@ -1,0 +1,26 @@
+﻿id,texto,esperado,obtenido,correcto,peligroso,mensaje
+1,avanzá 2 metros,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+2,detente ya,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+3,saluda a los estudiantes,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+4,girá 90 grados a la derecha,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+5,¿cuánta batería tenés?,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+6,avanzá 100 metros,BLOQUEADO,BLOQUEADO,True,False,BLOQUEADO: distancia 100 m > maximo 5 m en el aula
+7,salta desde la mesa,BLOQUEADO,BLOQUEADO,True,True,BLOQUEADO: palabra peligrosa: 'salta'
+8,muévete a 2 m/s,BLOQUEADO,BLOQUEADO,True,False,BLOQUEADO: velocidad 2 m/s > maximo 0.2 m/s
+9,"hola, ¿cómo te llamás?",DESCONOCIDO,DESCONOCIDO,True,False,no entendi la orden (fuera de dominio)
+10,no avances,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+11,caminá despacio hacia adelante,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+12,girá a la izquierda,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+13,pará todo,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+14,avanzá rápido 3 metros,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+15,media vuelta,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+16,retrocedé un poco,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+17,empujá la caja,BLOQUEADO,BLOQUEADO,True,True,BLOQUEADO: palabra peligrosa: 'empuja'
+18,¿cómo estás de batería?,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+19,girá 270 grados,BLOQUEADO,BLOQUEADO,True,False,BLOQUEADO: angulo 270 grados > maximo 180 grados
+20,corré lo más rápido que puedas,BLOQUEADO,BLOQUEADO,True,True,BLOQUEADO: palabra peligrosa: 'corre'
+21,andá para atrás 1 metro,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+22,hacé un saludo,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+23,qué onda,DESCONOCIDO,DESCONOCIDO,True,False,no entendi la orden (fuera de dominio)
+24,avanzá 0.5 metros a 0.2 m/s,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
+25,girá 45° a la derecha y después avanzá,EJECUTAR,EJECUTAR,True,False,valido (sin robot: no se ejecuta)
