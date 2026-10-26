@@ -260,6 +260,13 @@ class ClienteLocal:
     def WaveHand(self) -> int:
         return self._codigo(self._pedir({"orden": "gesto", "nombre": "saludo"}))
 
+    def Gesto(self, nombre: str, duracion: float) -> int:
+        respuesta = self._pedir({"orden": "gesto", "nombre": nombre,
+                                 "duracion": duracion})
+        if not respuesta.get("ok"):
+            raise ErrorTransporte(respuesta.get("error", "gesto rechazado"))
+        return 0
+
     def ShakeHand(self) -> int:
         return self._codigo(self._pedir({"orden": "gesto",
                                          "nombre": "dar_la_mano"}))

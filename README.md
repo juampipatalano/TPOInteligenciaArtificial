@@ -4,8 +4,9 @@
 **Altea Portilla · Franco Segesso · Wanda Schafer · Juan Pablo Patalano**
 
 Agente en castellano para el robot Unitree: clasifica intenciones, extrae
-parámetros, valida seguridad y ejecuta órdenes. Funciona por consola; el
-simulador proporciona la visualización del robot.
+parámetros, valida seguridad y ejecuta órdenes. Incluye una interfaz de
+escritorio para escribir comandos o cambiar al micrófono. El simulador
+proporciona la visualización del robot.
 
 ## Ejecutar sin robot
 
@@ -50,10 +51,30 @@ los documentos de `entrega`. `tp07_schafer_wanda.py` es una entrada con apellido
 que importa la implementación compartida; **no es un archivo independiente**.
 No se cambiaron los lanzadores ni los archivos de evaluación originales.
 
-Para el simulador seguir [INSTALACION.md](INSTALACION.md), abrir
-`INICIAR_SIMULADOR` y luego `EJECUTAR_MI_CODIGO`. El modo interactivo aparece
-después de la evaluación. La prueba visual con simulador está pendiente; las
-evidencias guardadas corresponden a ejecución sin robot y a un robot de prueba.
+Para probarlo, seguir [INSTALACION.md](INSTALACION.md), abrir
+`INICIAR_SIMULADOR` y luego `EJECUTAR_MI_CODIGO`. La interfaz se abre después
+de la evaluación.
+
+Para usar el micrófono, instalar una vez:
+
+```bash
+python -m pip install "SpeechRecognition[audio]"
+```
+
+La interfaz abre en modo texto. Usá los botones **Texto** y **Voz** para
+cambiar de modo; en modo voz, presioná **Escuchar comando** para dictar una
+orden. El reconocimiento en español argentino envía el audio al servicio de
+Google y requiere conexión a internet. También podés iniciar directamente en
+modo voz con `python mi_desarrollo/mi_tp07.py --voz`.
+
+El panel **Comandos disponibles** muestra ejemplos por categoría. Al pulsar
+uno se carga en el campo de texto para editarlo; se ejecuta al presionar
+**Enviar** o Enter. Los gestos que no admite el robot conectado aparecen
+deshabilitados.
+
+Con el **G1 del simulador** también podés decir "bailá", "festejá" o
+"hacé una pose de fisicoculturista". Son gestos cortos de brazos que no
+desplazan la base. No están habilitados en el Go2 ni en un robot físico.
 
 `PLAN_TP07.md` es un plan histórico del material del laboratorio; su encabezado
 «sin implementar» no describe el estado actual del agente del grupo. Los

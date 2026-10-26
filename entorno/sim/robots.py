@@ -98,9 +98,33 @@ class Robot:
     # Gestos extra: nombre -> (pose base {indice: rad},
     #                          oscilacion [(indice, amplitud, hz, desfase)])
     gestos: dict = field(default_factory=dict)
+    # Rutinas con keyframes: nombre -> (duracion, [(segundo, pose), ...]).
+    rutinas: dict = field(default_factory=dict)
 
     def aplicar_gesto(self, accion: str, art, t: float) -> bool:
-        """Pone la pose del gesto `accion` en `art`. False si no es un gesto."""
+        """Aplica una pose o interpola una rutina de articulaciones."""
+        rutina = self.rutinas.get(accion)
+        if rutina is not None:
+            duracion, cuadros = rutina
+            t = max(0.0, min(float(t), duracion))
+            anterior_t, anterior = cuadros[0]
+            siguiente_t, siguiente = cuadros[-1]
+            for (ta, a), (tb, b) in zip(cuadros, cuadros[1:]):
+                if t <= tb:
+                    anterior_t, anterior = ta, a
+                    siguiente_t, siguiente = tb, b
+                    break
+            tramo = max(1e-9, siguiente_t - anterior_t)
+            u = max(0.0, min(1.0, (t - anterior_t) / tramo))
+            # Ease-in/ease-out: los brazos arrancan y frenan con suavidad.
+            u = u * u * (3.0 - 2.0 * u)
+            for idx in anterior.keys() | siguiente.keys():
+                desde = anterior.get(idx, 0.0)
+                hasta = siguiente.get(idx, desde)
+                if idx < len(art):
+                    art[idx] = desde + (hasta - desde) * u
+            return True
+
         gesto = self.gestos.get(accion)
         if gesto is None:
             return False
@@ -135,6 +159,29 @@ G1_L_SHOULDER_P, G1_L_ELBOW = 15, 18
 G1_R_SHOULDER_P, G1_R_ELBOW = 22, 25
 G1_L_SHOULDER_R, G1_L_WRIST_R = 16, 19
 G1_R_SHOULDER_R, G1_R_WRIST_R = 23, 26
+G1_L_SHOULDER_Y, G1_R_SHOULDER_Y = 17, 24
+
+
+def _brazos_g1(hombro_p=0.20, hombro_r=0.0, codo=-0.30,
+               muneca=0.0, hombro_y=0.0) -> dict[int, float]:
+    """Pose simetrica de brazos, con signos espejados en los ejes laterales."""
+    return {
+        G1_L_SHOULDER_P: hombro_p, G1_R_SHOULDER_P: hombro_p,
+        G1_L_SHOULDER_R: hombro_r, G1_R_SHOULDER_R: -hombro_r,
+        G1_L_SHOULDER_Y: hombro_y, G1_R_SHOULDER_Y: -hombro_y,
+        G1_L_ELBOW: codo, G1_R_ELBOW: codo,
+        G1_L_WRIST_R: muneca, G1_R_WRIST_R: -muneca,
+    }
+
+
+def _brazos_g1_asimetricos(izq, der) -> dict[int, float]:
+    """Combina dos poses para keyframes de brazos alternados."""
+    pose = _brazos_g1()
+    pose.update({G1_L_SHOULDER_P: izq[0], G1_L_SHOULDER_R: izq[1],
+                 G1_L_ELBOW: izq[2], G1_L_WRIST_R: izq[3],
+                 G1_R_SHOULDER_P: der[0], G1_R_SHOULDER_R: der[1],
+                 G1_R_ELBOW: der[2], G1_R_WRIST_R: der[3]})
+    return pose
 
 G1 = Robot(
     clave="g1",
@@ -174,6 +221,53 @@ G1 = Robot(
             {G1_R_SHOULDER_P: -0.8, G1_R_SHOULDER_R: -0.1, G1_R_ELBOW: 0.6},
             [],
         ),
+    },
+    rutinas={
+        # Baile de brazos tipo "brazos arriba": alterna lados y termina abierto.
+        "baile": (4.8, [
+            (0.0, _brazos_g1()),
+            (0.4, _brazos_g1(-0.15, 0.65, 1.0)),
+            (0.9, _brazos_g1_asimetricos(
+                (-2.15, 0.20, -0.35, 0.0), (-0.15, -0.65, 1.0, 0.0))),
+            (1.45, _brazos_g1_asimetricos(
+                (-0.15, 0.65, 1.0, 0.0), (-2.15, -0.20, -0.35, 0.0))),
+            (2.0, _brazos_g1(-2.15, 0.20, -0.35)),
+            (2.55, _brazos_g1_asimetricos(
+                (-2.15, 0.20, -0.35, 0.0), (-0.15, -0.65, 1.0, 0.0))),
+            (3.1, _brazos_g1_asimetricos(
+                (-0.15, 0.65, 1.0, 0.0), (-2.15, -0.20, -0.35, 0.0))),
+            (3.7, _brazos_g1(-1.8, 0.35, 0.1)),
+            (4.25, _brazos_g1()),
+            (4.8, _brazos_g1()),
+        ]),
+        # Festejo: sube ambos brazos en V y hace tres bombeos alternados.
+        "festejo": (4.8, [
+            (0.0, _brazos_g1()),
+            (0.55, _brazos_g1(-2.25, 0.22, -0.35)),
+            (1.0, _brazos_g1_asimetricos(
+                (-0.75, 0.72, 1.25, 0.0), (-2.25, -0.22, -0.35, 0.0))),
+            (1.45, _brazos_g1(-2.25, 0.22, -0.35)),
+            (1.9, _brazos_g1_asimetricos(
+                (-2.25, 0.22, -0.35, 0.0), (-0.75, -0.72, 1.25, 0.0))),
+            (2.35, _brazos_g1(-2.25, 0.22, -0.35)),
+            (2.8, _brazos_g1_asimetricos(
+                (-0.75, 0.72, 1.25, 0.0), (-2.25, -0.22, -0.35, 0.0))),
+            (3.25, _brazos_g1(-2.25, 0.22, -0.35)),
+            (4.0, _brazos_g1(-2.25, 0.22, -0.35)),
+            (4.8, _brazos_g1()),
+        ]),
+        # Doble biceps: abduce los hombros y gira cada brazo sobre su eje
+        # (shoulder_yaw) para que el codo pliegue en el plano frontal.
+        # El cero del codo del MJCF ya forma aproximadamente un angulo recto:
+        # no corresponde al brazo estirado. -0.55 inclina las manos hacia la cabeza.
+        "pose_fisicoculturista": (12.0, [
+            (0.0, _brazos_g1()),
+            (0.65, _brazos_g1(0.0, math.pi / 2, math.pi / 2)),
+            (1.30, _brazos_g1(0.0, math.pi / 2, -0.55, -0.60,
+                                hombro_y=math.pi / 2)),
+            (12.0, _brazos_g1(0.0, math.pi / 2, -0.55, -0.60,
+                                hombro_y=math.pi / 2)),
+        ]),
     },
 )
 

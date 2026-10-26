@@ -65,7 +65,7 @@ class Visor:
                     art[idx] = valor + (
                         0.35 * math.sin(time.time() * 7.0) if e["accion"] == "saludando" else 0.0
                     )
-        elif self.robot.aplicar_gesto(e["accion"], art, time.time()):
+        elif self.robot.aplicar_gesto(e["accion"], art, e.get("tiempo_gesto", 0.0)):
             pass
         elif e["moviendose"]:
             f = e["fase"]

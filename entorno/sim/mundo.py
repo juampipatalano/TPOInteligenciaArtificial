@@ -53,6 +53,7 @@ class Mundo:
             self.accion = "quieto"
             self._vence_en = 0.0
             self._gesto_hasta = 0.0
+            self._gesto_inicio = 0.0
             self._ultimo_avance = time.monotonic()
             self.de_pie = True
             self.altura = 0.0        # offset sobre la altura normal, en metros
@@ -71,6 +72,7 @@ class Mundo:
         tiempo = validar_duracion(tiempo, self.perfil)
 
         with self._lock:
+            self._cancelar_gesto()
             self.vx, self.vy, self.vyaw = vx, vy, vyaw
             self._vence_en = tiempo
             if abs(vyaw) > abs(vx) + abs(vy):
@@ -104,6 +106,7 @@ class Mundo:
             lim.append(float(valor))
 
         with self._lock:
+            self._cancelar_gesto()
             if not self.de_pie:
                 self.avisos.append("el robot no esta de pie: ignoro el movimiento")
                 return
@@ -120,6 +123,7 @@ class Mundo:
         """Coloca el robot en una pose concreta. Lo usa el TP03 para arrancar
         en la celda de inicio, mirando en la orientacion del mapa."""
         with self._lock:
+            self._cancelar_gesto()
             self.x, self.y, self.yaw = float(x), float(y), float(yaw)
             self.vx = self.vy = self.vyaw = 0.0
             self._vence_en = 0.0
@@ -141,16 +145,24 @@ class Mundo:
     def detener(self) -> None:
         """Velocidad a cero. No apaga nada: el robot queda parado."""
         with self._lock:
+            self._cancelar_gesto()
             self.vx = self.vy = self.vyaw = 0.0
             self._vence_en = 0.0
             self.accion = "quieto"
 
+    def _cancelar_gesto(self) -> None:
+        """Una orden nueva reemplaza la animacion activa."""
+        self._gesto_hasta = 0.0
+        self._gesto_inicio = 0.0
+
     def gesto(self, nombre: str, duracion: float = 2.0) -> None:
         with self._lock:
+            ahora = time.monotonic()
             self.vx = self.vy = self.vyaw = 0.0
             self._vence_en = 0.0
             self.accion = nombre
-            self._gesto_hasta = time.monotonic() + duracion
+            self._gesto_inicio = ahora
+            self._gesto_hasta = ahora + duracion
 
     # ---------- lo llama el bucle del simulador ----------
     # Paso maximo de integracion. Con velocidades de 0.25 m/s, 20 ms son 5 mm:
@@ -179,6 +191,7 @@ class Mundo:
 
             if self._gesto_hasta and ahora >= self._gesto_hasta:
                 self._gesto_hasta = 0.0
+                self._gesto_inicio = 0.0
                 self.accion = "quieto"
 
             restante = dt
@@ -217,6 +230,8 @@ class Mundo:
                 "z": ALTURA_BASE,
                 "yaw": round(self.yaw, 4),
                 "accion": self.accion,
+                "tiempo_gesto": (max(0.0, time.monotonic() - self._gesto_inicio)
+                                 if self._gesto_inicio else 0.0),
                 "altura": self.altura,
                 "de_pie": self.de_pie,
                 "bateria": BATERIA_SIMULADA,

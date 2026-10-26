@@ -312,7 +312,8 @@ class SimuladorOficial:
             for idx, valor in self.robot.saludo.items():
                 if idx < len(art):
                     art[idx] = valor
-        elif self.robot.aplicar_gesto(e["accion"], art, time.time()):
+        elif self.robot.aplicar_gesto(
+                e["accion"], art, e.get("tiempo_gesto", 0.0)):
             pass
         elif e["moviendose"]:
             f = e["fase"]

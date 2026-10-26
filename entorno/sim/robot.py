@@ -373,6 +373,31 @@ class Robot:
         time.sleep(duracion)
         return self.verificar_estado()
 
+    def _hacer_gesto_de_brazos(self, nombre: str, duracion: float) -> EstadoRobot:
+        """Ejecuta una animacion local y acotada de brazos del G1."""
+        self._exigir_conexion()
+        if self.modelo != "g1":
+            raise NotImplementedError(
+                "Este gesto usa brazos y solo esta disponible para el G1.")
+        if self.transporte != "local":
+            raise NotImplementedError(
+                "La rutina esta disponible en el simulador; no se envia al "
+                "robot fisico sin una secuencia de articulaciones validada.")
+        self._cliente.Gesto(nombre, duracion)
+        return self.verificar_estado()
+
+    def hacer_baile(self) -> EstadoRobot:
+        """Baile breve en el lugar, moviendo solo hombros y codos del G1."""
+        return self._hacer_gesto_de_brazos("baile", 4.8)
+
+    def festejar(self) -> EstadoRobot:
+        """Festejo breve levantando los brazos, sin desplazar la base."""
+        return self._hacer_gesto_de_brazos("festejo", 4.8)
+
+    def posar_fisicoculturista(self) -> EstadoRobot:
+        """Mantiene la doble biceps visible mientras el usuario la observa."""
+        return self._hacer_gesto_de_brazos("pose_fisicoculturista", 12.0)
+
     # ---------- alias tolerantes a errores de tipeo ----------
     def movmineto(self, *a, **k):
         return self.avanzar(*a, **k)

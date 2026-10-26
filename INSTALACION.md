@@ -25,6 +25,20 @@ Si ya tenés todo instalado, andá directo a `LEEME_DOCENTE.md` o `LEEME_ESTUDIA
 el SDK de Unitree, ni compilar nada, ni tener internet después de bajar la
 carpeta.
 
+### Opción: dictar órdenes por voz
+
+La entrada de voz es opcional. Si la querés usar, instala también el
+reconocedor y el acceso al micrófono:
+
+```bash
+python -m pip install "SpeechRecognition[audio]"
+```
+
+El reconocimiento de voz envía el audio al servicio en línea de Google para
+transcribirlo en español argentino, por lo que esta función sí necesita
+internet. El resto del simulador y los comandos escritos no dependen de este
+paquete.
+
 > **Si venís de una versión anterior de este documento:** antes acá pedíamos
 > CycloneDDS y `unitree_sdk2_python`. Ya **no hacen falta** y se sacaron a
 > propósito:

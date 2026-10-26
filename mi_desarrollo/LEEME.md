@@ -16,6 +16,18 @@
 
 1. Abrí `INICIAR_SIMULADOR` y elegí el robot.
 2. Doble clic en `EJECUTAR_MI_CODIGO`, o `python3 mi_desarrollo/mi_tp07.py`.
+   Después de la evaluación se abre la interfaz para ingresar comandos.
+
+Para dictar órdenes, instala la opción de audio:
+
+```bash
+python -m pip install "SpeechRecognition[audio]"
+```
+
+En la interfaz, cambia entre **Texto** y **Voz**. En modo voz, pulsa
+**Escuchar comando** para dictar una orden. También puedes iniciar en ese
+modo con `python3 mi_desarrollo/mi_tp07.py --voz`. El reconocimiento en
+español argentino requiere internet y envía el audio a Google.
 
 **Sin robot** (para trabajar el clasificador tranquilo):
 
@@ -25,9 +37,9 @@ python3 mi_desarrollo/mi_tp07.py --sin-robot
 
 Corre los 25 casos y te da la accuracy, sin abrir nada.
 
-## Modo interactivo
+## Comandos del robot
 
-Con el robot conectado, después de la evaluación podés escribirle órdenes:
+En modo texto, escribe una orden y pulsa **Enviar** o Enter:
 
 ```
   > avanzá 2 metros
@@ -36,6 +48,8 @@ Con el robot conectado, después de la evaluación podés escribirle órdenes:
 ```
 
 Es la mejor forma de encontrar los casos que tu agente no cubre.
+La sección **Gestos del G1** de `LEEME_ESTUDIANTE.md` tiene ejemplos de
+baile, festejo y doble bíceps.
 
 ## Extensión: entrenar un modelo (nivel 2)
 
@@ -50,7 +64,8 @@ frená ahí,DETENERSE
 ```
 
 Completalo hasta unos 80. Las intenciones válidas son `MOVER`, `GIRAR`,
-`DETENERSE`, `SALUDO`, `CONSULTAR_ESTADO` y `DESCONOCIDO`.
+`DETENERSE`, `SALUDO`, `CONSULTAR_ESTADO` y `DESCONOCIDO`. Los gestos nuevos
+se reconocen por reglas (`GESTO`) y no necesitan ejemplos en el dataset.
 
 **2. Entrená y mirá tus métricas:**
 

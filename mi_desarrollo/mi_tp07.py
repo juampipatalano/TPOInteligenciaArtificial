@@ -19,8 +19,7 @@
 #      cuando las reglas no entienden, y solo si esta muy seguro.
 #    - Memoria: "hacelo otra vez", "como antes pero mas despacio".
 #    - Ordenes compuestas: "gira 45 grados y despues avanza 1 metro".
-#    - Humanoide G1: "dame la mano" usa el gesto ShakeHand, y
-#      "hace el 67" mueve los brazos como el meme.
+#    - Humanoide G1: saludo, mano, 67, baile, festejo y pose muscular.
 #    - Bateria: si hay robot, no se mueve con menos del minimo.
 # =====================================================================
 
@@ -65,8 +64,8 @@ GESTO_67 = (r"\b(?:67|6 7|seis siete|sesenta y siete|six seven)\b"
 
 
 # Conectores que separan una orden compuesta en pasos.
-_VERBOS_INICIO = (r"gir|avanz|avanc|camin|salud|mov|muev|retroced|and|par|"
-                  r"fren|deten|rot|dobl|volv|da|hac")
+_VERBOS_INICIO = (r"gir|avanz|avanc|camin|salud|bail|festej|celebr|flex|"
+                  r"mov|muev|retroced|and|par|fren|deten|rot|dobl|volv|da|hac")
 _SEPARADOR = re.compile(
     r"\s*\b(?:y\s+)?(?:despues|luego|entonces)\b\s*"
     rf"|\s+y\s+(?=(?:{_VERBOS_INICIO}))")
@@ -84,7 +83,7 @@ def partir_en_pasos(texto_normalizado):
 class ClasificadorIntencion:
     """Decide QUE quiere el usuario, sin mirar los numeros todavia."""
 
-    TIPOS = ("MOVER", "GIRAR", "DETENERSE", "SALUDO",
+    TIPOS = ("MOVER", "GIRAR", "DETENERSE", "SALUDO", "GESTO",
              "CONSULTAR_ESTADO", "DESCONOCIDO")
 
     # Las reglas se prueban en este orden. Frenar va primero: "no avances"
@@ -115,6 +114,12 @@ class ClasificadorIntencion:
         # una orden de saludar, es una charla fuera de dominio.
         r"^(?:hola|buenas|buen dia|buenas tardes|buenas noches)"
         r"(?: (?:robot|a todos|a todas|chicos|clase|g1))?$",
+    )
+    REGLAS_GESTO = (
+        r"\b(?:bail\w*|bailecito|danza)\b",
+        r"\b(?:festej\w*|celebr\w*)\b",
+        r"\b(?:pose|fisicocultur\w*|culturist\w*|muscul\w*|biceps)\b",
+        r"\bflexiona los brazos\b",
     )
     REGLAS_GIRAR = (
         r"\b(?:gir\w*|rot\w*|volte\w*|vuelta|dobl\w*)\b",
@@ -155,6 +160,8 @@ class ClasificadorIntencion:
             return "DETENERSE", 0.95
         if self._primera(self.REGLAS_ESTADO, t) is not None:
             return "CONSULTAR_ESTADO", 0.9
+        if self._primera(self.REGLAS_GESTO, t) is not None:
+            return "GESTO", 0.95
         if self._primera(self.REGLAS_SALUDO, t) is not None:
             return "SALUDO", 0.9
 
@@ -168,7 +175,7 @@ class ClasificadorIntencion:
         return "DESCONOCIDO", 0.0
 
     def clasificar(self, texto):
-        """Devuelve uno de los seis tipos de TIPOS.
+        """Devuelve una de las intenciones de TIPOS.
 
         Reglas primero, porque son explicables y no alucinan. Si las reglas
         no reconocen nada, se le pregunta al modelo entrenado, que generaliza
@@ -289,6 +296,15 @@ class ExtractorParametros:
             p["gesto"] = "mano"
         if tipo == "SALUDO" and re.search(GESTO_67, t):
             p["gesto"] = "67"
+        if tipo == "GESTO":
+            if re.search(r"\b(?:bail\w*|bailecito|danza)\b", t):
+                p["gesto"] = "baile"
+            elif re.search(r"\b(?:festej\w*|celebr\w*)\b", t):
+                p["gesto"] = "festejo"
+            elif re.search(
+                    r"\b(?:pose|fisicocultur\w*|culturist\w*|muscul\w*|"
+                    r"biceps)\b|\bflexiona los brazos\b", t):
+                p["gesto"] = "pose_fisicoculturista"
 
         # Los enteros quedan enteros: 90 y no 90.0, es mas legible.
         for k in ("angulo_deg",):
@@ -340,7 +356,7 @@ class ValidadorSeguridad:
     # En un aula no tiene sentido ir mas lejos que esto de una sola vez.
     DISTANCIA_MAX_M = 5.0
     ANGULO_MAX_DEG = 180
-    TIPOS_QUE_MUEVEN = ("MOVER", "GIRAR", "SALUDO")
+    TIPOS_QUE_MUEVEN = ("MOVER", "GIRAR", "SALUDO", "GESTO")
 
     def __init__(self, perfil, leer_bateria=None):
         # perfil trae los limites de tu materia:
@@ -430,6 +446,7 @@ class EjecutorHumanoide(Ejecutor):
     """Agrega los gestos del G1 al ejecutor de la catedra.
 
     "dame la mano" -> ShakeHand. Si el robot no tiene manos (Go2), saluda.
+    Las nuevas rutinas GESTO son solo para el G1 del simulador.
     """
 
     def ejecutar(self, tipo, parametros):
@@ -446,6 +463,23 @@ class EjecutorHumanoide(Ejecutor):
                 return "hizo el 67"
             except NotImplementedError:
                 pass
+        if tipo == "GESTO":
+            rutina = {
+                "baile": self.robot.hacer_baile,
+                "festejo": self.robot.festejar,
+                "pose_fisicoculturista": self.robot.posar_fisicoculturista,
+            }.get(parametros.get("gesto"))
+            if rutina is None:
+                return "no reconoci ese gesto"
+            try:
+                rutina()
+                return {
+                    "baile": "baile iniciado",
+                    "festejo": "festejo iniciado",
+                    "pose_fisicoculturista": "pose de doble biceps activa",
+                }[parametros["gesto"]]
+            except NotImplementedError as exc:
+                return str(exc)
         if tipo == "CONSULTAR_ESTADO":
             e = self.robot.verificar_estado()
             return f"estado: {e}  bateria={e.bateria}%"
@@ -539,7 +573,7 @@ class AgenteRobot:
         # La memoria solo guarda movimientos: "otra vez" despues de frenar
         # no tiene que volver a frenar sino repetir lo ultimo que hizo.
         for t, p in ejecutables:
-            if t in ("MOVER", "GIRAR", "SALUDO"):
+            if t in ("MOVER", "GIRAR", "SALUDO", "GESTO"):
                 self.ultimo_ejecutado = (t, dict(p))
         self._registrar(respuesta)
         return respuesta
@@ -569,6 +603,7 @@ def main():
     # Modo sin robot: solo evalua los 25 casos. Sirve para trabajar el
     # clasificador sin tener el simulador abierto.
     sin_robot = "--sin-robot" in sys.argv
+    modo_voz = "--voz" in sys.argv
 
     robot = None
     if not sin_robot:
@@ -582,16 +617,9 @@ def main():
         evaluar(agente)
 
         if robot is not None:
-            print("\n  Escribi ordenes para el robot. Enter vacio para salir.")
-            while True:
-                try:
-                    texto = input("\n  > ").strip()
-                except (EOFError, KeyboardInterrupt):
-                    break
-                if not texto:
-                    break
-                r = agente.procesar(texto)
-                print(f"    {r['tipo']}  {r.get('mensaje', '')}")
+            from interfaz import InterfazComandos
+
+            InterfazComandos(agente, robot, modo_voz=modo_voz).iniciar()
     finally:
         if robot is not None:
             robot.detenerse()

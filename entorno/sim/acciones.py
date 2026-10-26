@@ -18,12 +18,18 @@ Lo permitido es lo minimo util: moverse y gestos que no cambian la postura.
 from __future__ import annotations
 
 # Gestos permitidos, por robot. nombre publico -> (metodo del bridge, descripcion)
+# Las rutinas nuevas son animaciones de brazos del G1 en el simulador; no
+# llaman a las rutinas Dance/Pose del SDK ni mueven la base del robot.
 PERMITIDAS: dict[str, dict[str, tuple[str, str]]] = {
     "g1": {
         "saludo": ("saludar", "Saluda con la mano"),
         "dar_la_mano": ("dar_la_mano", "Extiende la mano para saludar"),
         # Solo mueve los brazos: no cambia la postura ni la base.
         "seis_siete": ("hacer_67", "Hace el 67 con las manos"),
+        "baile": ("hacer_baile", "Baile sencillo de brazos, sin desplazamiento"),
+        "festejo": ("festejar", "Festejo levantando los brazos"),
+        "pose_fisicoculturista": ("posar_fisicoculturista",
+                                  "Pose de fisicoculturista con los brazos"),
     },
     "go2": {
         "saludo": ("saludar", "Saluda"),

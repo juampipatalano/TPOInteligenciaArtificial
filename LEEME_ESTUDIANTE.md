@@ -1,9 +1,9 @@
 # TP07 — Inteligencia Artificial
 ## Guía para el estudiante
 
-Vas a escribir un **agente** que recibe órdenes escritas en castellano y las
-convierte en acciones del robot. *"avanzá 2 metros"*, *"girá a la derecha"*,
-*"detente ya"*.
+Vas a escribir un **agente** que recibe órdenes en castellano, escritas o
+dictadas por voz, y las convierte en acciones del robot. *"avanzá 2 metros"*,
+*"girá a la derecha"*, *"detente ya"*.
 
 Y algo más importante: que **rechace** lo que no debe hacer.
 
@@ -31,8 +31,47 @@ Abrí **`mi_desarrollo/mi_tp07.py`**. Hay cuatro bloques con `# TU CODIGO ACA`.
 
 ### 4. Ejecutarlo
 
-Doble clic en `EJECUTAR_MI_CODIGO`. Vas a ver la tabla de los 25 casos, tu
-accuracy, y después un modo interactivo para escribirle órdenes al robot.
+Doble clic en `EJECUTAR_MI_CODIGO`. Vas a ver la tabla de los 25 casos y tu
+accuracy; después se abre una interfaz para escribirle órdenes al robot.
+
+El panel **Comandos disponibles** incluye ejemplos de movimientos, saludos,
+consultas, gestos y secuencias. Pulsá uno para cargarlo en el campo de texto,
+ajustá los valores si querés y presioná **Enviar** o Enter. También podés
+dictar estas frases en modo voz. Los gestos exclusivos del G1 se indican en
+la lista y se deshabilitan al conectar un Go2.
+
+### Dictar órdenes por voz
+
+Instalá la opción de audio una vez:
+
+```bash
+python -m pip install "SpeechRecognition[audio]"
+```
+
+Con el simulador abierto, iniciá el agente y usá el selector **Texto / Voz**
+de la interfaz. En modo voz, presioná **Escuchar comando** para dictar una
+orden. También podés iniciar directamente en modo voz:
+
+```bash
+python mi_desarrollo/mi_tp07.py --voz
+```
+
+El reconocimiento usa español argentino y necesita internet; una vez
+transcripto, el comando pasa por el mismo agente y sus validaciones de
+seguridad que una orden escrita. El audio se envía al servicio de Google para
+transcribirlo.
+
+### Gestos del G1
+
+Con el modelo **G1** en el simulador, podés escribir o dictar:
+
+- **"bailá"**: baile sencillo de brazos en el lugar.
+- **"festejá"**: levanta y mueve un poco los brazos.
+- **"hacé doble bíceps"** o **"hacé una pose de fisicoculturista"**:
+  levanta los brazos, flexiona ambos codos y sostiene la pose.
+
+Son animaciones de brazos: no desplazan al robot. No están disponibles para
+el Go2 ni para un robot físico.
 
 ---
 
@@ -52,7 +91,7 @@ Cuatro etapas, y la consigna pide que sean **independientes**:
 | 3 | `ValidadorSeguridad` | decide si **se puede** hacer |
 | 4 | `Ejecutor` | **ya está hecho**: manda al robot |
 
-Las seis intenciones: `MOVER`, `GIRAR`, `DETENERSE`, `SALUDO`,
+Las intenciones: `MOVER`, `GIRAR`, `DETENERSE`, `SALUDO`, `GESTO`,
 `CONSULTAR_ESTADO` y `DESCONOCIDO`.
 
 **Escribí una etapa por vez y probala.** Es mucho más fácil encontrar un error
